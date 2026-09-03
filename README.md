@@ -33,6 +33,9 @@ Treść powiadomienia zawiera też notatkę pielęgnacyjną dla danego terminu
 (np. "rzadkie, sukulentowe — dokładnie osuszać podłoże; miernik: ok. 2"),
 jeśli była zapisana przy roślinie (pole `watering_notes`/`fertilizing_notes`).
 
+Jeśli roślina ma ustawione zdjęcie (`plant_management.set_photo`), powiadomienie
+pokaże je jako miniaturkę — nie trzeba nic dodatkowo konfigurować.
+
 Naciśnięcie przycisku w powiadomieniu na telefonie od razu aktualizuje dane
 w Home Assistant — nie trzeba nic dodatkowo konfigurować w automatyzacjach,
 integracja sama nasłuchuje zdarzenia `mobile_app_notification_action`.

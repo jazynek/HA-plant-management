@@ -213,10 +213,10 @@ async def _async_run_notification_check(hass: HomeAssistant, entry: ConfigEntry,
                 )
 
         message = f"{title}\n{message_body}" if message_body else title
-        service_data = {
-            "message": message,
-            "data": {"actions": actions, "tag": f"plant_management_{plant_id}"},
-        }
+        notification_data: dict[str, Any] = {"actions": actions, "tag": f"plant_management_{plant_id}"}
+        if plant.get("photo"):
+            notification_data["image"] = f"/api/image/serve/{plant['photo']}/original"
+        service_data = {"message": message, "data": notification_data}
         try:
             await hass.services.async_call("notify", notify_service, service_data, blocking=True)
         except Exception:  # noqa: BLE001
