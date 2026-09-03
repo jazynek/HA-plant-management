@@ -145,6 +145,12 @@ class PlantStore:
     def remove_plant(self, plant_id: str) -> None:
         self.plants.pop(plant_id, None)
 
+    def remove_by_name(self, name: str) -> str | None:
+        plant_id = self.find_by_name(name)
+        if plant_id:
+            self.plants.pop(plant_id, None)
+        return plant_id
+
     def mark_watered(
         self, plant_id: str, also_fertilize: bool = False, note: str | None = None, when: date | None = None
     ) -> None:

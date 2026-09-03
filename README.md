@@ -56,14 +56,18 @@ zrestartuj HA.
 
 ## Import roślin z Trello
 
-W `data/trello_seed.json` znajdują się wszystkie 34 rośliny wyciągnięte z
-tablicy Trello "Kwiatki" (gatunek, zasady podlewania/nawożenia, strefa
-oświetlenia, ostatnie/kolejne terminy, notatki o przesadzeniu, link do
-oryginalnej karty Trello). Interwały podlewania/nawożenia zostały
+W `data/trello_seed.json` znajdują się rośliny wyciągnięte z tablicy Trello
+"Kwiatki" (gatunek, wymagane nasłonecznienie, zasady podlewania/nawożenia,
+strefa oświetlenia, ostatnie/kolejne terminy, notatki o przesadzeniu, link
+do oryginalnej karty Trello). Interwały podlewania/nawożenia zostały
 oszacowane automatycznie z opisów po polsku — warto je przejrzeć i
 skorygować po imporcie (`plant_management.update_plant`).
 
-Import:
+Ten plik **nie synchronizuje się automatycznie** z Trello — to
+jednorazowy/ręcznie odświeżany eksport (patrz sekcja "Trello ↔ Home
+Assistant" niżej dla planów na automatyzację tego).
+
+### Import (nowe rośliny + aktualizacja istniejących)
 
 ```bash
 export HA_URL=http://homeassistant.local:8123
@@ -75,14 +79,37 @@ Skrypt woła usługę `plant_management.import_seed`, która dodaje rośliny (i
 ich encje) w jednym wywołaniu. **Bezpiecznie uruchomić ponownie** — import
 dopasowuje rośliny po polu `name`: jeśli roślina o tej samej nazwie już
 istnieje, jej dane są aktualizowane (bez duplikatu), a jeśli nie istnieje —
-zostaje dodana. Dzięki temu, gdy zaktualizujesz `data/trello_seed.json` o
-nowe pola (np. doszedł `light_notes`), wystarczy uruchomić skrypt ponownie,
-żeby uzupełnić już zaimportowane rośliny.
+zostaje dodana.
 
-Nowe encje (np. dodane w przyszłej wersji integracji) pojawiają się dla już
-istniejących roślin dopiero po **restarcie Home Assistant** albo
+### Usuwanie roślin, których już nie ma (zdechły / usunięte z Trello)
+
+Import **nie usuwa** roślin, które zniknęły z `trello_seed.json` — trzeba
+je usunąć jawnie, po dokładnej nazwie:
+
+```bash
+export HA_URL=http://homeassistant.local:8123
+export HA_TOKEN=<token>
+python3 tools/remove_plants.py "17. Tillandsia caput-medusae" "18. Tillandsia ionantha"
+```
+
+Można podać kilka nazw naraz. Nazwa musi być identyczna jak pole `name`
+zapisane przy roślinie (widoczne jako nazwa urządzenia w HA).
+
+### Nowe encje po aktualizacji integracji
+
+Nowe typy encji (np. dodane w przyszłej wersji integracji) pojawiają się
+dla już istniejących roślin dopiero po **restarcie Home Assistant** albo
 przeładowaniu integracji (Ustawienia → Urządzenia i usługi → Plant
 Management → ⋮ → Przeładuj) — sam import/update danych tego nie robi.
+
+## Trello ↔ Home Assistant (plany na przyszłość)
+
+Obecnie synchronizacja z Trello jest ręczna: trzeba wygenerować nowy
+`data/trello_seed.json` (wymaga dostępu do Trello API/MCP) i uruchomić
+import/usuwanie opisane wyżej. Wygodniejsza automatyzacja (np. okresowe
+odpytywanie API Trello bezpośrednio z Home Assistant i pełna synchronizacja
+dodań/usunięć/zmian) to temat na osobny etap prac — jeszcze nie
+zaimplementowany.
 
 Pole `zone` (aktualne stanowisko) zostało zaimportowane jako puste — w
 Trello było oznaczone `[uzupełnij]` dla większości roślin. Uzupełnij je

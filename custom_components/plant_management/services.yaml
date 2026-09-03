@@ -136,6 +136,16 @@ remove_plant:
       selector:
         text:
 
+remove_by_name:
+  name: Usuń roślinę po nazwie
+  description: Usuwa roślinę (i jej encje) po dokładnej nazwie, bez potrzeby znajomości plant_id.
+  fields:
+    name:
+      required: true
+      example: "17. Tillandsia caput-medusae"
+      selector:
+        text:
+
 mark_watered:
   name: Zaznacz podlanie
   description: Zapisuje podlanie rośliny dzisiaj i przelicza kolejny termin.

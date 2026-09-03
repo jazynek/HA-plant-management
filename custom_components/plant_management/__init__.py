@@ -34,6 +34,7 @@ from .const import (
     SERVICE_MARK_FERTILIZED,
     SERVICE_MARK_WATERED,
     SERVICE_MARK_WATERED_AND_FERTILIZED,
+    SERVICE_REMOVE_BY_NAME,
     SERVICE_REMOVE_PLANT,
     SERVICE_REPOT,
     SERVICE_SNOOZE_FERTILIZING,
@@ -74,6 +75,7 @@ PLANT_FIELDS_SCHEMA = {
 ADD_PLANT_SCHEMA = vol.Schema({vol.Required("name"): cv.string, **PLANT_FIELDS_SCHEMA})
 UPDATE_PLANT_SCHEMA = vol.Schema({vol.Required(ATTR_PLANT_ID): cv.string, **PLANT_FIELDS_SCHEMA})
 PLANT_ID_SCHEMA = vol.Schema({vol.Required(ATTR_PLANT_ID): cv.string})
+REMOVE_BY_NAME_SCHEMA = vol.Schema({vol.Required("name"): cv.string})
 MARK_WATERED_SCHEMA = vol.Schema(
     {vol.Required(ATTR_PLANT_ID): cv.string, vol.Optional(ATTR_NOTE): cv.string}
 )
@@ -266,6 +268,13 @@ def _async_register_services(hass: HomeAssistant, store: PlantStore) -> None:
         await store.async_save()
         async_dispatcher_send(hass, SIGNAL_PLANT_REMOVED, plant_id)
 
+    async def remove_by_name(call: ServiceCall) -> None:
+        plant_id = store.remove_by_name(call.data["name"])
+        if not plant_id:
+            return
+        await store.async_save()
+        async_dispatcher_send(hass, SIGNAL_PLANT_REMOVED, plant_id)
+
     async def mark_watered(call: ServiceCall) -> None:
         plant_id = call.data[ATTR_PLANT_ID]
         store.mark_watered(plant_id, note=call.data.get(ATTR_NOTE))
@@ -316,6 +325,9 @@ def _async_register_services(hass: HomeAssistant, store: PlantStore) -> None:
     hass.services.async_register(DOMAIN, SERVICE_ADD_PLANT, add_plant, schema=ADD_PLANT_SCHEMA)
     hass.services.async_register(DOMAIN, SERVICE_UPDATE_PLANT, update_plant, schema=UPDATE_PLANT_SCHEMA)
     hass.services.async_register(DOMAIN, SERVICE_REMOVE_PLANT, remove_plant, schema=PLANT_ID_SCHEMA)
+    hass.services.async_register(
+        DOMAIN, SERVICE_REMOVE_BY_NAME, remove_by_name, schema=REMOVE_BY_NAME_SCHEMA
+    )
     hass.services.async_register(DOMAIN, SERVICE_MARK_WATERED, mark_watered, schema=MARK_WATERED_SCHEMA)
     hass.services.async_register(
         DOMAIN, SERVICE_MARK_FERTILIZED, mark_fertilized, schema=MARK_WATERED_SCHEMA

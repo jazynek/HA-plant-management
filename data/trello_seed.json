@@ -105,7 +105,7 @@
     "last_fertilized": "2026-08-18",
     "next_fertilizing": "2026-09-15",
     "last_repotted": "2026-08-18",
-    "trello_url": "https://trello.com/c/9nly3tIC/6"
+    "trello_url": "https://trello.com/c/9nly3tIC/6-6-grubosz-jajowaty-odm-gollum-crassula-ovata-gollum"
   },
   {
     "name": "7. Kaktus kolumnowy - jasne kolce (rodzaj do potwierdzenia, np. Echinopsis/Cereus)",
@@ -123,7 +123,7 @@
     "last_fertilized": "2026-08-18",
     "next_fertilizing": "2026-09-15",
     "last_repotted": "2026-08-18",
-    "trello_url": "https://trello.com/c/K8dGbTCW/7"
+    "trello_url": "https://trello.com/c/K8dGbTCW/7-7-kaktus-kolumnowy-jasne-kolce-rodzaj-do-potwierdzenia-np-echinopsis-cereus"
   },
   {
     "name": "8. Filodendron (Philodendron sp., prawdopodobnie erubescens/hastatum) - do potwierdzenia",
@@ -141,7 +141,7 @@
     "last_fertilized": "2026-08-09",
     "next_fertilizing": "2026-08-09",
     "last_repotted": null,
-    "trello_url": "https://trello.com/c/sN4S0SJJ/8"
+    "trello_url": "https://trello.com/c/sN4S0SJJ/8-8-filodendron-philodendron-sp-prawdopodobnie-erubescens-hastatum-do-potwierdzenia"
   },
   {
     "name": "9. Figowiec lirowaty (Ficus lyrata)",
@@ -288,42 +288,6 @@
     "trello_url": "https://trello.com/c/m1VywEPx/16-16-fikus-benjamina-pleciony-pie%C5%84-ficus-benjamina"
   },
   {
-    "name": "17. Tillandsia caput-medusae",
-    "species": "Tillandsia caput-medusae (\"głowa Meduzy\") - roślina powietrzna/epifit, bez podłoża",
-    "zone": null,
-    "light_zone": "strefa 4",
-    "watering_interval_days": 7,
-    "fertilizing_interval_days": 30,
-    "light_notes": "jasne stanowisko, dużo światła, znosi też sporo bezpośredniego słońca (typ pośredni mezo-kseryczny)",
-    "watering_notes": "moczenie 15-20 min lub intensywne zamglenie 2-3x/tydz.; bulwiasta podstawa magazynuje trochę wody, ale i tak potrzebuje regularnej wilgoci; po podlaniu strzepnąć wodę i osuszyć główką do dołu (max 4h)",
-    "fertilizing_notes": "rozcieńczony nawóz do tillandsii/bromeliowatych ok. 1x/mies.",
-    "care_notes": null,
-    "last_watered": "2026-08-12",
-    "next_watering": "2026-08-17",
-    "last_fertilized": "2026-08-09",
-    "next_fertilizing": "2026-08-09",
-    "last_repotted": null,
-    "trello_url": "https://trello.com/c/0T2AO5x3/50-17-tillandsia-caput-medusae"
-  },
-  {
-    "name": "18. Tillandsia ionantha",
-    "species": "Tillandsia ionantha - roślina powietrzna/epifit, bez podłoża; przed kwitnieniem środek czerwienieje/różowieje",
-    "zone": null,
-    "light_zone": "strefa 4",
-    "watering_interval_days": 7,
-    "fertilizing_interval_days": 30,
-    "light_notes": "jasne stanowisko, dużo światła, znosi też sporo bezpośredniego słońca - im więcej światła, tym intensywniejszy kolor",
-    "watering_notes": "moczenie 20-30 min lub intensywne zamglenie 2-3x/tydz.; łatwy, wybaczający gatunek; po podlaniu strzepnąć wodę i osuszyć główką do dołu (max 4h)",
-    "fertilizing_notes": "rozcieńczony nawóz do tillandsii/bromeliowatych ok. 1x/mies.",
-    "care_notes": null,
-    "last_watered": "2026-08-12",
-    "next_watering": "2026-08-17",
-    "last_fertilized": "2026-08-09",
-    "next_fertilizing": "2026-08-09",
-    "last_repotted": null,
-    "trello_url": "https://trello.com/c/mHP443dI/53-18-tillandsia-ionantha"
-  },
-  {
     "name": "19. Tillandsia juncea",
     "species": "Tillandsia juncea - roślina powietrzna/epifit, cienkie sitowate liście, bez podłoża (typ kseryczny - dużo trichomów)",
     "zone": null,
@@ -360,24 +324,6 @@
     "trello_url": "https://trello.com/c/PpHzQgGa/59-20-tillandsia-fuchsii-var-gracilis"
   },
   {
-    "name": "21. Tillandsia filifolia",
-    "species": "Tillandsia filifolia - roślina powietrzna/epifit, nitkowate liście, bez podłoża (typ bardziej mezyczny - mniej trichomów, szybciej wysycha)",
-    "zone": null,
-    "light_zone": "strefa 4",
-    "watering_interval_days": 7,
-    "fertilizing_interval_days": 30,
-    "light_notes": "jasne stanowisko, dużo światła rozproszonego; ostrożnie z pełnym, mocnym słońcem w upalne dni",
-    "watering_notes": "częstsze niż u typów kserycznych - zamglenie 3-4x/tydz. lub krótkie moczenie 10-15 min, bo drobne liście szybko wysychają; dobrze osuszyć po podlaniu",
-    "fertilizing_notes": "rozcieńczony nawóz do tillandsii/bromeliowatych ok. 1x/mies.",
-    "care_notes": null,
-    "last_watered": "2026-08-13",
-    "next_watering": "2026-08-17",
-    "last_fertilized": "2026-08-09",
-    "next_fertilizing": "2026-08-09",
-    "last_repotted": null,
-    "trello_url": "https://trello.com/c/12rwsNBV/62-21-tillandsia-filifolia"
-  },
-  {
     "name": "22. Tillandsia harrisii",
     "species": "Tillandsia harrisii - roślina powietrzna/epifit, srebrzyste, mocno owłosione liście, bez podłoża (typ silnie kseryczny - dużo trichomów)",
     "zone": null,
@@ -394,24 +340,6 @@
     "next_fertilizing": "2026-08-09",
     "last_repotted": null,
     "trello_url": "https://trello.com/c/075xaULw/65-22-tillandsia-harrisii"
-  },
-  {
-    "name": "23. Tillandsia pseudobaileyi",
-    "species": "Tillandsia pseudobaileyi - roślina powietrzna/epifit, bulwiasta podstawa i skręcające się liście, bez podłoża",
-    "zone": null,
-    "light_zone": "strefa 4",
-    "watering_interval_days": 7,
-    "fertilizing_interval_days": 30,
-    "light_notes": "jasne stanowisko, dużo światła, znosi też sporo bezpośredniego słońca",
-    "watering_notes": "moczenie 15-20 min lub intensywne zamglenie 2-3x/tydz.; po podlaniu strzepnąć wodę i osuszyć główką do dołu (max 4h)",
-    "fertilizing_notes": "rozcieńczony nawóz do tillandsii/bromeliowatych ok. 1x/mies.",
-    "care_notes": null,
-    "last_watered": "2026-08-12",
-    "next_watering": "2026-08-17",
-    "last_fertilized": "2026-08-09",
-    "next_fertilizing": "2026-08-09",
-    "last_repotted": null,
-    "trello_url": "https://trello.com/c/ZYGZlUD1/68-23-tillandsia-pseudobaileyi"
   },
   {
     "name": "24. Tillandsia ionantha 'Scaposa'",
@@ -610,5 +538,95 @@
     "next_fertilizing": "2026-09-12",
     "last_repotted": null,
     "trello_url": "https://trello.com/c/zWOu7pL8/119-34-ficus-elastica-druga-sztuka"
+  },
+  {
+    "name": "35. Tillandsia Curly Slim",
+    "species": "Tillandsia Curly Slim (hybryda T. intermedia x T. streptophylla) - epifit bez podłoża",
+    "zone": null,
+    "light_zone": "docelowo raczej strefa 2-3 (jasne, ale rozproszone), NIE strefa 1",
+    "watering_interval_days": 7,
+    "fertilizing_interval_days": 30,
+    "light_notes": "jasne, rozproszone światło; unikać pełnego, intensywnego słońca (inaczej niż większość tillandsi na tablicy - ta odmiana woli mniej ostre światło)",
+    "watering_notes": "krótkie maczanie maks. 3 min/tydz. LUB zamglenie - długie kąpiele (20-30 min) rozprostowują charakterystyczne skręty liści, więc unikać; ocena po dotyku/wadze (miernik nie ma zastosowania - epifit bez podłoża)",
+    "fertilizing_notes": "rozcieńczony nawóz do bromeliowatych/tillandsii ok. 1x/mies. w sezonie wegetacyjnym",
+    "care_notes": null,
+    "last_watered": "2026-08-28",
+    "next_watering": "2026-09-04",
+    "last_fertilized": null,
+    "next_fertilizing": "2026-09-25",
+    "last_repotted": null,
+    "trello_url": "https://trello.com/c/ljyDTU3q/122"
+  },
+  {
+    "name": "36. Tillandsia Juncea",
+    "species": "Tillandsia juncea - epifit bez podłoża, wąskie, sztywne, trawiaste liście",
+    "zone": null,
+    "light_zone": "toleruje strefę 2-3, nie wymaga pełnego słońca strefy 1",
+    "watering_interval_days": 7,
+    "fertilizing_interval_days": 30,
+    "light_notes": "umiarkowane - dobrze znosi półcień, unikać pełnego bezpośredniego słońca (mniej wymagająca niż typowe xero-tillandsie na tablicy)",
+    "watering_notes": "zamglenie 2-3x/tydz. LUB maczanie raz w tyg.; ocena po dotyku/wadze (miernik nie ma zastosowania - epifit bez podłoża)",
+    "fertilizing_notes": "rozcieńczony nawóz do bromeliowatych/tillandsii ok. 1x/mies. w sezonie wegetacyjnym",
+    "care_notes": null,
+    "last_watered": "2026-08-28",
+    "next_watering": "2026-09-04",
+    "last_fertilized": null,
+    "next_fertilizing": "2026-09-25",
+    "last_repotted": null,
+    "trello_url": "https://trello.com/c/4kEtH9g4/125"
+  },
+  {
+    "name": "37. Tillandsia Bulbosa",
+    "species": "Tillandsia bulbosa - epifit bez podłoża, bulwiasta podstawa, skręcone, wężowate liście",
+    "zone": null,
+    "light_zone": "docelowo strefa 3 (półcień), NIE strefa 1-2 jak inne tillandsie",
+    "watering_interval_days": 2,
+    "fertilizing_interval_days": 30,
+    "light_notes": "PÓŁCIEŃ, BEZ bezpośredniego słońca - gatunek mezyczny (nie kseryczny jak większość tillandsi na tablicy!). Zbyt intensywne światło = słaby, \"zmęczony\" wzrost",
+    "watering_notes": "CZĘŚCIEJ niż inne tillandsie - zamglenie co 2-3 dni + wyższa wilgotność powietrza (min. 60%); ocena po dotyku/wadze (miernik nie ma zastosowania - epifit bez podłoża). Ważne: dobra wentylacja po podlaniu, aby uniknąć gnicia bulwy",
+    "fertilizing_notes": "rozcieńczony nawóz do bromeliowatych/tillandsii ok. 1x/mies. w sezonie wegetacyjnym",
+    "care_notes": null,
+    "last_watered": "2026-08-28",
+    "next_watering": "2026-09-06",
+    "last_fertilized": null,
+    "next_fertilizing": "2026-09-25",
+    "last_repotted": null,
+    "trello_url": "https://trello.com/c/hnCPczX2/128"
+  },
+  {
+    "name": "38. Tillandsia Ionantha Scaposa",
+    "species": "Tillandsia ionantha var. scaposa - epifit bez podłoża, odmiana ionanthy tolerująca niższe światło",
+    "zone": null,
+    "light_zone": "strefa 1-2 jak inne xero-tillandsie (#17-24), ale toleruje też lekko słabszą (strefa 2-3)",
+    "watering_interval_days": 7,
+    "fertilizing_interval_days": 30,
+    "light_notes": "jasne, rozproszone; toleruje umiarkowane/niższe światło lepiej niż standardowa ionantha - dobra opcja dla lokalizacji trochę słabiej oświetlonych niż strefa 1",
+    "watering_notes": "zamglenie/maczanie 1x/tydz.; ocena po dotyku/wadze (miernik nie ma zastosowania - epifit bez podłoża)",
+    "fertilizing_notes": "rozcieńczony nawóz do bromeliowatych/tillandsii ok. 1x/mies. w sezonie wegetacyjnym",
+    "care_notes": null,
+    "last_watered": "2026-08-28",
+    "next_watering": "2026-09-04",
+    "last_fertilized": null,
+    "next_fertilizing": "2026-09-25",
+    "last_repotted": null,
+    "trello_url": "https://trello.com/c/Ouk19aV1/131"
+  },
+  {
+    "name": "39. Tillandsia Tricolor",
+    "species": "Tillandsia tricolor - epifit bez podłoża, z rodziny ionanthowatych",
+    "zone": null,
+    "light_zone": "strefa 1-2 jak inne xero-tillandsie (#17-24)",
+    "watering_interval_days": 7,
+    "fertilizing_interval_days": 30,
+    "light_notes": "jasne, rozproszone światło - standard jak inne xero-tillandsie na tablicy (#17-24)",
+    "watering_notes": "zamglenie/maczanie 1x/tydz.; ocena po dotyku/wadze (miernik nie ma zastosowania - epifit bez podłoża)",
+    "fertilizing_notes": "rozcieńczony nawóz do bromeliowatych/tillandsii ok. 1x/mies. w sezonie wegetacyjnym",
+    "care_notes": null,
+    "last_watered": "2026-08-28",
+    "next_watering": "2026-09-04",
+    "last_fertilized": null,
+    "next_fertilizing": "2026-09-25",
+    "last_repotted": null,
+    "trello_url": "https://trello.com/c/t48WtDft/134"
   }
 ]

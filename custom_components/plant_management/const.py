@@ -37,6 +37,7 @@ SNOOZE_DAYS_CHOICES = (1, 3, 5)
 SERVICE_ADD_PLANT = "add_plant"
 SERVICE_UPDATE_PLANT = "update_plant"
 SERVICE_REMOVE_PLANT = "remove_plant"
+SERVICE_REMOVE_BY_NAME = "remove_by_name"
 SERVICE_MARK_WATERED = "mark_watered"
 SERVICE_MARK_FERTILIZED = "mark_fertilized"
 SERVICE_MARK_WATERED_AND_FERTILIZED = "mark_watered_and_fertilized"

@@ -9,11 +9,13 @@ Usage:
 HA_TOKEN must be a Long-Lived Access Token created under your HA profile
 (Settings -> your profile -> Security -> Long-lived access tokens).
 
-The script calls the plant_management.import_seed service, which adds one
-plant per entry (creating its status/next_watering/next_fertilizing sensors
-and its two buttons). Safe to re-run: each run creates new plant entries, so
-if you re-run after already importing, remove the previously-created plants
-first (or clear the integration's storage) to avoid duplicates.
+The script calls the plant_management.import_seed service, which adds a new
+plant for each entry not already present (matched by exact `name`), and
+updates the existing plant otherwise. Safe to re-run any time you refresh
+data/trello_seed.json from Trello (new plants, updated care notes, etc.) —
+it will not create duplicates. It does NOT remove plants that disappeared
+from the seed file (e.g. ones you deleted from Trello because they died) —
+use tools/remove_plants.py for that.
 """
 from __future__ import annotations
 
