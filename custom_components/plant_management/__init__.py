@@ -112,8 +112,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     domain_data = hass.data.setdefault(DOMAIN, {})
 
     if not domain_data.get("_photo_path_registered"):
-        await async_register_photo_path(hass)
-        domain_data["_photo_path_registered"] = True
+        try:
+            await async_register_photo_path(hass)
+            domain_data["_photo_path_registered"] = True
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception(
+                "Failed to register plant photo static path; set_photo/entity_picture "
+                "will not work, but the rest of the integration will still load"
+            )
 
     store = PlantStore(hass)
     await store.async_load()

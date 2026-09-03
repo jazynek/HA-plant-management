@@ -6,6 +6,7 @@ import shutil
 from pathlib import Path
 
 from homeassistant.components.file_upload import process_uploaded_file
+from homeassistant.components.http import StaticPathConfig
 from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN
@@ -19,14 +20,17 @@ def _photos_dir(hass: HomeAssistant) -> Path:
     return Path(hass.config.path(".storage", f"{DOMAIN}_photos"))
 
 
-def _register_static_path_sync(hass: HomeAssistant) -> None:
+def _ensure_photos_dir(hass: HomeAssistant) -> Path:
     photos_dir = _photos_dir(hass)
     photos_dir.mkdir(parents=True, exist_ok=True)
-    hass.http.register_static_path(PHOTOS_URL_PATH, str(photos_dir), False)
+    return photos_dir
 
 
 async def async_register_photo_path(hass: HomeAssistant) -> None:
-    await hass.async_add_executor_job(_register_static_path_sync, hass)
+    photos_dir = await hass.async_add_executor_job(_ensure_photos_dir, hass)
+    await hass.http.async_register_static_paths(
+        [StaticPathConfig(PHOTOS_URL_PATH, str(photos_dir), False)]
+    )
 
 
 def _write_photo(hass: HomeAssistant, plant_id: str, file_id: str) -> str:
