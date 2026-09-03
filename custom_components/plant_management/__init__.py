@@ -58,6 +58,7 @@ PLANT_FIELDS_SCHEMA = {
     vol.Optional("light_zone"): cv.string,
     vol.Optional("watering_interval_days"): vol.Coerce(int),
     vol.Optional("fertilizing_interval_days"): vol.Coerce(int),
+    vol.Optional("light_notes"): cv.string,
     vol.Optional("watering_notes"): cv.string,
     vol.Optional("fertilizing_notes"): cv.string,
     vol.Optional("care_notes"): cv.string,
@@ -155,6 +156,13 @@ async def _async_run_notification_check(hass: HomeAssistant, entry: ConfigEntry,
 
     for plant_id, plant, water_due, fert_due in due:
         actions: list[dict[str, str]] = []
+        note_lines = []
+        if water_due and plant.get("watering_notes"):
+            note_lines.append(f"💧 {plant['watering_notes']}")
+        if fert_due and plant.get("fertilizing_notes"):
+            note_lines.append(f"🌱 {plant['fertilizing_notes']}")
+        message_body = "\n".join(note_lines)
+
         if water_due and fert_due:
             title = f"🌿 {plant['name']}: podlej i nawieź"
             actions.append({"action": f"PM_{ACTION_WATER}::{plant_id}", "title": "💧 Podlano"})
@@ -186,8 +194,9 @@ async def _async_run_notification_check(hass: HomeAssistant, entry: ConfigEntry,
                     {"action": f"PM_{ACTION_SNOOZE_FERTILIZE}_{d}::{plant_id}", "title": f"⏭ +{d}d"}
                 )
 
+        message = f"{title}\n{message_body}" if message_body else title
         service_data = {
-            "message": title,
+            "message": message,
             "data": {"actions": actions, "tag": f"plant_management_{plant_id}"},
         }
         try:
@@ -294,8 +303,14 @@ def _async_register_services(hass: HomeAssistant, store: PlantStore) -> None:
 
     async def import_seed(call: ServiceCall) -> None:
         for plant_fields in call.data["plants"]:
-            plant_id = store.add_plant(**plant_fields)
-            async_dispatcher_send(hass, SIGNAL_PLANT_ADDED, plant_id)
+            name = plant_fields.get("name")
+            existing_id = store.find_by_name(name) if name else None
+            if existing_id:
+                store.update_plant(existing_id, **plant_fields)
+                async_dispatcher_send(hass, SIGNAL_PLANT_UPDATED, existing_id)
+            else:
+                plant_id = store.add_plant(**plant_fields)
+                async_dispatcher_send(hass, SIGNAL_PLANT_ADDED, plant_id)
         await store.async_save()
 
     hass.services.async_register(DOMAIN, SERVICE_ADD_PLANT, add_plant, schema=ADD_PLANT_SCHEMA)

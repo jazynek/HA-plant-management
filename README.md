@@ -11,10 +11,12 @@ Dla każdej rośliny integracja tworzy jedno urządzenie ("device") z encjami:
 
 - `sensor.<roślina>_status` — `ok` / `water_due` / `fertilize_due` /
   `both_due`, ze zdjęciem (`entity_picture`) i pełnymi atrybutami: gatunek,
-  strefa, notatki pielęgnacyjne, ostatnie/kolejne terminy, link do starej
-  karty Trello oraz **historia** (ostatnie 20 zdarzeń: podlanie, nawożenie,
-  przesadzenie, notatki, snooze).
-- `sensor.<roślina>_kolejne_podlewanie` i `sensor.<roślina>_kolejne_nawozenie`
+  strefa, **wymagane nasłonecznienie** (`light_notes`), zasady
+  podlewania/nawożenia (w tym miernik wilgotności, jeśli był podany),
+  ostatnie/kolejne terminy, link do starej karty Trello oraz **historia**
+  (ostatnie 20 zdarzeń: podlanie, nawożenie, przesadzenie, notatki, snooze).
+- `sensor.<roślina>_kolejne_podlewanie`, `sensor.<roślina>_kolejne_nawozenie`,
+  `sensor.<roślina>_ostatnie_podlewanie`, `sensor.<roślina>_ostatnie_nawozenie`
   — encje typu `date`, wygodne do automatyzacji i widoków kalendarza.
 - `button.<roślina>_podlano` i `button.<roślina>_podlano_nawoz` — do
   ręcznego oznaczania z poziomu dashboardu.
@@ -26,6 +28,10 @@ telefon** (przez aplikację HA Companion) na roślinę, z przyciskami akcji:
 - 💧 **Podlano**
 - 💧🌱 **Podlano + Nawóz** (zaznacza jednocześnie podlanie i nawożenie)
 - ⏭ **+1 dzień / +3 dni / +5 dni** (przesuwa najbliższy termin)
+
+Treść powiadomienia zawiera też notatkę pielęgnacyjną dla danego terminu
+(np. "rzadkie, sukulentowe — dokładnie osuszać podłoże; miernik: ok. 2"),
+jeśli była zapisana przy roślinie (pole `watering_notes`/`fertilizing_notes`).
 
 Naciśnięcie przycisku w powiadomieniu na telefonie od razu aktualizuje dane
 w Home Assistant — nie trzeba nic dodatkowo konfigurować w automatyzacjach,
@@ -65,11 +71,18 @@ export HA_TOKEN=<Long-Lived Access Token z Twojego profilu w HA>
 python3 tools/import_trello_seed.py
 ```
 
-Skrypt woła usługę `plant_management.import_seed`, która dodaje 34 rośliny
-(i ich encje) w jednym wywołaniu. **Nie uruchamiaj go dwa razy** bez
-usunięcia poprzednio zaimportowanych roślin (`plant_management.remove_plant`
-albo wyczyszczenie `.storage/plant_management_plants` w HA) — inaczej
-powstaną duplikaty.
+Skrypt woła usługę `plant_management.import_seed`, która dodaje rośliny (i
+ich encje) w jednym wywołaniu. **Bezpiecznie uruchomić ponownie** — import
+dopasowuje rośliny po polu `name`: jeśli roślina o tej samej nazwie już
+istnieje, jej dane są aktualizowane (bez duplikatu), a jeśli nie istnieje —
+zostaje dodana. Dzięki temu, gdy zaktualizujesz `data/trello_seed.json` o
+nowe pola (np. doszedł `light_notes`), wystarczy uruchomić skrypt ponownie,
+żeby uzupełnić już zaimportowane rośliny.
+
+Nowe encje (np. dodane w przyszłej wersji integracji) pojawiają się dla już
+istniejących roślin dopiero po **restarcie Home Assistant** albo
+przeładowaniu integracji (Ustawienia → Urządzenia i usługi → Plant
+Management → ⋮ → Przeładuj) — sam import/update danych tego nie robi.
 
 Pole `zone` (aktualne stanowisko) zostało zaimportowane jako puste — w
 Trello było oznaczone `[uzupełnij]` dla większości roślin. Uzupełnij je

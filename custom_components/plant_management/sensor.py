@@ -107,6 +107,7 @@ class PlantStatusSensor(_PlantBaseEntity):
             "light_zone": plant.get("light_zone"),
             "watering_interval_days": plant.get("watering_interval_days"),
             "fertilizing_interval_days": plant.get("fertilizing_interval_days"),
+            "light_notes": plant.get("light_notes"),
             "watering_notes": plant.get("watering_notes"),
             "fertilizing_notes": plant.get("fertilizing_notes"),
             "care_notes": plant.get("care_notes"),
@@ -150,11 +151,23 @@ class PlantNextFertilizingSensor(_PlantDateSensor):
         super().__init__(store, plant_id, "next_fertilizing", "kolejne nawożenie", "next_fertilizing")
 
 
+class PlantLastWateredSensor(_PlantDateSensor):
+    def __init__(self, store: PlantStore, plant_id: str) -> None:
+        super().__init__(store, plant_id, "last_watered", "ostatnie podlewanie", "last_watered")
+
+
+class PlantLastFertilizedSensor(_PlantDateSensor):
+    def __init__(self, store: PlantStore, plant_id: str) -> None:
+        super().__init__(store, plant_id, "last_fertilized", "ostatnie nawożenie", "last_fertilized")
+
+
 def _entities_for_plant(store: PlantStore, plant_id: str) -> list[SensorEntity]:
     return [
         PlantStatusSensor(store, plant_id),
         PlantNextWateringSensor(store, plant_id),
         PlantNextFertilizingSensor(store, plant_id),
+        PlantLastWateredSensor(store, plant_id),
+        PlantLastFertilizedSensor(store, plant_id),
     ]
 
 

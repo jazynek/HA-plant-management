@@ -26,6 +26,9 @@ add_plant:
         number:
           min: 1
           max: 365
+    light_notes:
+      selector:
+        text:
     watering_notes:
       selector:
         text:
@@ -90,6 +93,9 @@ update_plant:
         number:
           min: 1
           max: 365
+    light_notes:
+      selector:
+        text:
     watering_notes:
       selector:
         text:

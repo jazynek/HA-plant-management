@@ -63,6 +63,12 @@ class PlantStore:
     def get_plant(self, plant_id: str) -> dict[str, Any] | None:
         return self.plants.get(plant_id)
 
+    def find_by_name(self, name: str) -> str | None:
+        for plant_id, plant in self.plants.items():
+            if plant.get("name") == name:
+                return plant_id
+        return None
+
     def _new_id(self) -> str:
         while True:
             candidate = "p_" + secrets.token_hex(4)
@@ -103,6 +109,7 @@ class PlantStore:
             "light_zone": fields.get("light_zone"),
             "watering_interval_days": fields.get("watering_interval_days") or DEFAULT_WATER_INTERVAL_DAYS,
             "fertilizing_interval_days": fields.get("fertilizing_interval_days") or DEFAULT_FERT_INTERVAL_DAYS,
+            "light_notes": fields.get("light_notes"),
             "watering_notes": fields.get("watering_notes"),
             "fertilizing_notes": fields.get("fertilizing_notes"),
             "care_notes": fields.get("care_notes"),
@@ -131,7 +138,7 @@ class PlantStore:
         if not plant:
             raise ValueError(f"Unknown plant_id: {plant_id}")
         for key, value in fields.items():
-            if value is not None and key in plant:
+            if value is not None:
                 plant[key] = value
         self._log(plant, "updated")
 
