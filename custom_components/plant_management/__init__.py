@@ -9,7 +9,7 @@ from typing import Any
 import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import Event, HomeAssistant, ServiceCall
-from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers import config_validation as cv, device_registry as dr
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.helpers.event import async_track_time_change
 
@@ -20,7 +20,9 @@ from .const import (
     ACTION_WATER,
     ACTION_WATER_FERTILIZE,
     ATTR_DAYS,
+    ATTR_DEVICE_ID,
     ATTR_NOTE,
+    ATTR_PHOTO,
     ATTR_PLANT_ID,
     CONF_CHECK_TIME,
     CONF_NOTIFY_SERVICE,
@@ -37,6 +39,7 @@ from .const import (
     SERVICE_REMOVE_BY_NAME,
     SERVICE_REMOVE_PLANT,
     SERVICE_REPOT,
+    SERVICE_SET_PHOTO,
     SERVICE_SNOOZE_FERTILIZING,
     SERVICE_SNOOZE_WATERING,
     SERVICE_UPDATE_PLANT,
@@ -76,6 +79,19 @@ ADD_PLANT_SCHEMA = vol.Schema({vol.Required("name"): cv.string, **PLANT_FIELDS_S
 UPDATE_PLANT_SCHEMA = vol.Schema({vol.Required(ATTR_PLANT_ID): cv.string, **PLANT_FIELDS_SCHEMA})
 PLANT_ID_SCHEMA = vol.Schema({vol.Required(ATTR_PLANT_ID): cv.string})
 REMOVE_BY_NAME_SCHEMA = vol.Schema({vol.Required("name"): cv.string})
+SET_PHOTO_SCHEMA = vol.Schema(
+    {vol.Required(ATTR_DEVICE_ID): cv.string, vol.Required(ATTR_PHOTO): cv.string}
+)
+
+
+def _plant_id_from_device(hass: HomeAssistant, device_id: str) -> str | None:
+    device = dr.async_get(hass).async_get(device_id)
+    if not device:
+        return None
+    for domain, identifier in device.identifiers:
+        if domain == DOMAIN:
+            return identifier
+    return None
 MARK_WATERED_SCHEMA = vol.Schema(
     {vol.Required(ATTR_PLANT_ID): cv.string, vol.Optional(ATTR_NOTE): cv.string}
 )
@@ -310,6 +326,17 @@ def _async_register_services(hass: HomeAssistant, store: PlantStore) -> None:
         store.add_note(plant_id, call.data[ATTR_NOTE])
         await _save_and_notify(plant_id, SIGNAL_PLANT_UPDATED)
 
+    async def set_photo(call: ServiceCall) -> None:
+        plant_id = _plant_id_from_device(hass, call.data[ATTR_DEVICE_ID])
+        if not plant_id or not store.get_plant(plant_id):
+            _LOGGER.error(
+                "set_photo: device_id %s does not match a Plant Management plant",
+                call.data[ATTR_DEVICE_ID],
+            )
+            return
+        store.set_photo(plant_id, call.data[ATTR_PHOTO])
+        await _save_and_notify(plant_id, SIGNAL_PLANT_UPDATED)
+
     async def import_seed(call: ServiceCall) -> None:
         for plant_fields in call.data["plants"]:
             name = plant_fields.get("name")
@@ -346,4 +373,5 @@ def _async_register_services(hass: HomeAssistant, store: PlantStore) -> None:
     )
     hass.services.async_register(DOMAIN, SERVICE_REPOT, repot, schema=REPOT_SCHEMA)
     hass.services.async_register(DOMAIN, SERVICE_ADD_NOTE, add_note, schema=ADD_NOTE_SCHEMA)
+    hass.services.async_register(DOMAIN, SERVICE_SET_PHOTO, set_photo, schema=SET_PHOTO_SCHEMA)
     hass.services.async_register(DOMAIN, SERVICE_IMPORT_SEED, import_seed, schema=IMPORT_SEED_SCHEMA)

@@ -39,7 +39,7 @@ add_plant:
       selector:
         text:
     photo:
-      example: "monstera.jpg"
+      description: Zaawansowane/API — użyj raczej usługi set_photo do przesyłania zdjęć z UI.
       selector:
         text:
     last_watered:
@@ -106,6 +106,7 @@ update_plant:
       selector:
         text:
     photo:
+      description: Zaawansowane/API — użyj raczej usługi set_photo do przesyłania zdjęć z UI.
       selector:
         text:
     last_watered:
@@ -245,3 +246,19 @@ import_seed:
       required: true
       selector:
         object:
+
+set_photo:
+  name: Ustaw zdjęcie rośliny
+  description: Przesyła zdjęcie i przypisuje je do wybranej rośliny — wybierz roślinę z listy i prześlij plik, bez ręcznego kopiowania do folderu.
+  fields:
+    device_id:
+      name: Roślina
+      required: true
+      selector:
+        device:
+          integration: plant_management
+    photo:
+      name: Zdjęcie
+      required: true
+      selector:
+        image:

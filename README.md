@@ -117,27 +117,29 @@ przez usługę `plant_management.update_plant` albo z poziomu Developer Tools.
 
 ## Zdjęcia
 
-Trello API do pobierania załączników nie było dostępne w tej sesji, więc
-zdjęcia trzeba dodać ręcznie:
+Zdjęcia dodaje się przez wbudowany w Home Assistant mechanizm przesyłania
+obrazów (ten sam, którego HA używa np. do zdjęcia profilowego encji
+"Osoba") — bez kopiowania plików do żadnego folderu i bez dopasowywania
+nazw:
 
-1. Wyeksportuj zdjęcia z kart w Trello (każda karta ma link
-   `trello_url`/`trello_main_url` w danych seed — otwórz kartę i pobierz
-   załącznik).
-2. Wrzuć pliki do `<config>/www/plant_management/` w Home Assistant
-   (utwórz folder, jeśli nie istnieje).
-3. Ustaw pole `photo` na nazwę pliku, np.:
+1. **Developer Tools → Actions** (albo Ustawienia → Automatyzacje i sceny →
+   Skrypty → uruchom akcję ręcznie) → wyszukaj **"Plant Management: Ustaw
+   zdjęcie rośliny"**.
+2. W polu **Roślina** wybierz z listy rozwijanej (pokazuje nazwy urządzeń —
+   nie trzeba znać żadnego ID).
+3. W polu **Zdjęcie** kliknij, żeby przesłać plik z dysku/telefonu (albo
+   wybrać już wcześniej przesłany obraz).
+4. Wykonaj — zdjęcie od razu pojawi się jako `entity_picture` na
+   `sensor.<roślina>_status`.
 
-   ```yaml
-   service: plant_management.update_plant
-   data:
-     plant_id: p_xxxxxxxx
-     photo: monstera.jpg
-   ```
+Jeśli chcesz zrobić to dla wielu roślin naraz, powtórz dla każdej — nie ma
+(jeszcze) karty Lovelace z galerią do zbiorczego przesyłania, ale to i tak
+szybsze niż ręczne kopiowanie plików: kilka kliknięć na roślinę, bez
+przełączania się do menedżera plików.
 
-   `plant_id` znajdziesz w atrybutach encji `sensor.<roślina>_status`
-   (`unique_id` zawiera go, albo sprawdź w Developer Tools → States) —
-   jeśli wolisz, dodaj też pomocniczą usługę wyszukania po nazwie z poziomu
-   szablonu Jinja.
+Zdjęcia z Trello nadal trzeba pobrać ręcznie z kart (API do załączników nie
+było dostępne przy migracji) — każda roślina ma zapisany `trello_url` w
+atrybutach, więc łatwo otworzyć właściwą kartę.
 
 ## Usługi
 
@@ -146,6 +148,8 @@ zdjęcia trzeba dodać ręcznie:
 | `plant_management.add_plant` | Dodaje nową roślinę |
 | `plant_management.update_plant` | Aktualizuje pola istniejącej rośliny |
 | `plant_management.remove_plant` | Usuwa roślinę i jej encje |
+| `plant_management.remove_by_name` | Usuwa roślinę po dokładnej nazwie (bez plant_id) |
+| `plant_management.set_photo` | Przesyła zdjęcie i przypisuje je do wybranej rośliny (wybór z listy + upload pliku) |
 | `plant_management.mark_watered` | Zaznacza podlanie dziś |
 | `plant_management.mark_fertilized` | Zaznacza nawożenie dziś |
 | `plant_management.mark_watered_and_fertilized` | Zaznacza oba naraz |

@@ -95,7 +95,7 @@ class PlantStatusSensor(_PlantBaseEntity):
     def entity_picture(self) -> str | None:
         photo = self._plant.get("photo")
         if photo:
-            return f"/local/plant_management/{photo}"
+            return f"/api/image/serve/{photo}/original"
         return None
 
     @property
