@@ -1,0 +1,40 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Plant Management",
+        "description": "Set up the plant management integration. You can change this later in Options.",
+        "data": {
+          "notify_service": "Notify service (e.g. mobile_app_iphone, without the notify. prefix)",
+          "check_time": "Daily check time (HH:MM:SS)"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "This integration is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "notify_service": "Notify service (e.g. mobile_app_iphone, without the notify. prefix)",
+          "check_time": "Daily check time (HH:MM:SS)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "plant_status": {
+        "name": "Status",
+        "state": {
+          "ok": "OK",
+          "water_due": "Water due",
+          "fertilize_due": "Fertilize due",
+          "both_due": "Water and fertilize due"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,231 @@
+add_plant:
+  name: Dodaj roślinę
+  description: Dodaje nową roślinę do systemu.
+  fields:
+    name:
+      required: true
+      example: "Monstera deliciosa"
+      selector:
+        text:
+    species:
+      selector:
+        text:
+    zone:
+      selector:
+        text:
+    light_zone:
+      selector:
+        text:
+    watering_interval_days:
+      selector:
+        number:
+          min: 1
+          max: 120
+    fertilizing_interval_days:
+      selector:
+        number:
+          min: 1
+          max: 365
+    watering_notes:
+      selector:
+        text:
+    fertilizing_notes:
+      selector:
+        text:
+    care_notes:
+      selector:
+        text:
+    photo:
+      example: "monstera.jpg"
+      selector:
+        text:
+    last_watered:
+      example: "2026-09-01"
+      selector:
+        text:
+    next_watering:
+      example: "2026-09-08"
+      selector:
+        text:
+    last_fertilized:
+      selector:
+        text:
+    next_fertilizing:
+      selector:
+        text:
+    last_repotted:
+      selector:
+        text:
+    trello_url:
+      selector:
+        text:
+
+update_plant:
+  name: Zaktualizuj roślinę
+  description: Aktualizuje dane istniejącej rośliny (pola opcjonalne, tylko podane są zmieniane).
+  fields:
+    plant_id:
+      required: true
+      selector:
+        text:
+    name:
+      selector:
+        text:
+    species:
+      selector:
+        text:
+    zone:
+      selector:
+        text:
+    light_zone:
+      selector:
+        text:
+    watering_interval_days:
+      selector:
+        number:
+          min: 1
+          max: 120
+    fertilizing_interval_days:
+      selector:
+        number:
+          min: 1
+          max: 365
+    watering_notes:
+      selector:
+        text:
+    fertilizing_notes:
+      selector:
+        text:
+    care_notes:
+      selector:
+        text:
+    photo:
+      selector:
+        text:
+    last_watered:
+      selector:
+        text:
+    next_watering:
+      selector:
+        text:
+    last_fertilized:
+      selector:
+        text:
+    next_fertilizing:
+      selector:
+        text:
+    last_repotted:
+      selector:
+        text:
+    trello_url:
+      selector:
+        text:
+
+remove_plant:
+  name: Usuń roślinę
+  description: Usuwa roślinę i jej encje.
+  fields:
+    plant_id:
+      required: true
+      selector:
+        text:
+
+mark_watered:
+  name: Zaznacz podlanie
+  description: Zapisuje podlanie rośliny dzisiaj i przelicza kolejny termin.
+  fields:
+    plant_id:
+      required: true
+      selector:
+        text:
+    note:
+      selector:
+        text:
+
+mark_fertilized:
+  name: Zaznacz nawożenie
+  description: Zapisuje nawożenie rośliny dzisiaj i przelicza kolejny termin.
+  fields:
+    plant_id:
+      required: true
+      selector:
+        text:
+    note:
+      selector:
+        text:
+
+mark_watered_and_fertilized:
+  name: Zaznacz podlanie i nawożenie
+  description: Zapisuje jednocześnie podlanie i nawożenie rośliny dzisiaj.
+  fields:
+    plant_id:
+      required: true
+      selector:
+        text:
+    note:
+      selector:
+        text:
+
+snooze_watering:
+  name: Przesuń podlewanie
+  description: Przesuwa termin kolejnego podlewania o podaną liczbę dni.
+  fields:
+    plant_id:
+      required: true
+      selector:
+        text:
+    days:
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 30
+
+snooze_fertilizing:
+  name: Przesuń nawożenie
+  description: Przesuwa termin kolejnego nawożenia o podaną liczbę dni.
+  fields:
+    plant_id:
+      required: true
+      selector:
+        text:
+    days:
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 90
+
+repot:
+  name: Zaznacz przesadzenie
+  description: Zapisuje datę przesadzenia rośliny wraz z notatką (np. mieszanka podłoża).
+  fields:
+    plant_id:
+      required: true
+      selector:
+        text:
+    note:
+      selector:
+        text:
+
+add_note:
+  name: Dodaj notatkę
+  description: Dodaje wpis do historii pielęgnacji rośliny bez zmiany terminów.
+  fields:
+    plant_id:
+      required: true
+      selector:
+        text:
+    note:
+      required: true
+      selector:
+        text:
+
+import_seed:
+  name: Importuj dane (seed)
+  description: Masowo dodaje rośliny z listy obiektów (używane przez tools/import_trello_seed.py).
+  fields:
+    plants:
+      required: true
+      selector:
+        object:

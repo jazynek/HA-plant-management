@@ -1,0 +1,40 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Zarządzanie roślinami",
+        "description": "Skonfiguruj integrację do zarządzania roślinami. Możesz to zmienić później w Opcjach.",
+        "data": {
+          "notify_service": "Usługa powiadomień (np. mobile_app_iphone, bez prefiksu notify.)",
+          "check_time": "Godzina codziennego sprawdzania (HH:MM:SS)"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Integracja jest już skonfigurowana."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "notify_service": "Usługa powiadomień (np. mobile_app_iphone, bez prefiksu notify.)",
+          "check_time": "Godzina codziennego sprawdzania (HH:MM:SS)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "plant_status": {
+        "name": "Status",
+        "state": {
+          "ok": "OK",
+          "water_due": "Do podlania",
+          "fertilize_due": "Do nawożenia",
+          "both_due": "Do podlania i nawożenia"
+        }
+      }
+    }
+  }
+}
