@@ -22,6 +22,7 @@ from .const import (
     STATUS_WATER_DUE,
 )
 from .coordinator import PlantStore
+from .photo_storage import PHOTOS_URL_PATH
 
 STATUS_ICONS = {
     STATUS_OK: "mdi:flower",
@@ -95,7 +96,7 @@ class PlantStatusSensor(_PlantBaseEntity):
     def entity_picture(self) -> str | None:
         photo = self._plant.get("photo")
         if photo:
-            return f"/api/image/serve/{photo}/original"
+            return f"{PHOTOS_URL_PATH}/{photo}"
         return None
 
     @property

@@ -261,4 +261,5 @@ set_photo:
       name: Zdjęcie
       required: true
       selector:
-        image:
+        file:
+          accept: "image/*"

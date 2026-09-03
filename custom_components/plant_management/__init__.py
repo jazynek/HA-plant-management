@@ -48,6 +48,7 @@ from .const import (
     SIGNAL_PLANT_UPDATED,
 )
 from .coordinator import PlantStore
+from .photo_storage import PHOTOS_URL_PATH, async_register_photo_path, async_save_uploaded_photo
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -108,7 +109,11 @@ IMPORT_SEED_SCHEMA = vol.Schema({vol.Required("plants"): vol.All(cv.ensure_list,
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    hass.data.setdefault(DOMAIN, {})
+    domain_data = hass.data.setdefault(DOMAIN, {})
+
+    if not domain_data.get("_photo_path_registered"):
+        await async_register_photo_path(hass)
+        domain_data["_photo_path_registered"] = True
 
     store = PlantStore(hass)
     await store.async_load()
@@ -215,7 +220,7 @@ async def _async_run_notification_check(hass: HomeAssistant, entry: ConfigEntry,
         message = f"{title}\n{message_body}" if message_body else title
         notification_data: dict[str, Any] = {"actions": actions, "tag": f"plant_management_{plant_id}"}
         if plant.get("photo"):
-            notification_data["image"] = f"/api/image/serve/{plant['photo']}/original"
+            notification_data["image"] = f"{PHOTOS_URL_PATH}/{plant['photo']}"
         service_data = {"message": message, "data": notification_data}
         try:
             await hass.services.async_call("notify", notify_service, service_data, blocking=True)
@@ -334,7 +339,8 @@ def _async_register_services(hass: HomeAssistant, store: PlantStore) -> None:
                 call.data[ATTR_DEVICE_ID],
             )
             return
-        store.set_photo(plant_id, call.data[ATTR_PHOTO])
+        filename = await async_save_uploaded_photo(hass, plant_id, call.data[ATTR_PHOTO])
+        store.set_photo(plant_id, filename)
         await _save_and_notify(plant_id, SIGNAL_PLANT_UPDATED)
 
     async def import_seed(call: ServiceCall) -> None:

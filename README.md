@@ -121,19 +121,18 @@ przez usługę `plant_management.update_plant` albo z poziomu Developer Tools.
 ## Zdjęcia
 
 Zdjęcia dodaje się przez wbudowany w Home Assistant mechanizm przesyłania
-obrazów (ten sam, którego HA używa np. do zdjęcia profilowego encji
-"Osoba") — bez kopiowania plików do żadnego folderu i bez dopasowywania
-nazw:
+plików (selektor `file`) — bez kopiowania plików do żadnego folderu i bez
+dopasowywania nazw:
 
 1. **Developer Tools → Actions** (albo Ustawienia → Automatyzacje i sceny →
    Skrypty → uruchom akcję ręcznie) → wyszukaj **"Plant Management: Ustaw
    zdjęcie rośliny"**.
 2. W polu **Roślina** wybierz z listy rozwijanej (pokazuje nazwy urządzeń —
    nie trzeba znać żadnego ID).
-3. W polu **Zdjęcie** kliknij, żeby przesłać plik z dysku/telefonu (albo
-   wybrać już wcześniej przesłany obraz).
-4. Wykonaj — zdjęcie od razu pojawi się jako `entity_picture` na
-   `sensor.<roślina>_status`.
+3. W polu **Zdjęcie** kliknij, żeby przesłać plik z dysku/telefonu.
+4. Wykonaj — integracja sama zapisuje przesłany plik na stałe (w
+   `.storage/plant_management_photos/`) i zdjęcie od razu pojawia się jako
+   `entity_picture` na `sensor.<roślina>_status`.
 
 Jeśli chcesz zrobić to dla wielu roślin naraz, powtórz dla każdej — nie ma
 (jeszcze) karty Lovelace z galerią do zbiorczego przesyłania, ale to i tak
