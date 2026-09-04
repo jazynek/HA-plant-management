@@ -81,8 +81,16 @@ python3 tools/import_trello_seed.py
 Skrypt woła usługę `plant_management.import_seed`, która dodaje rośliny (i
 ich encje) w jednym wywołaniu. **Bezpiecznie uruchomić ponownie** — import
 dopasowuje rośliny po polu `name`: jeśli roślina o tej samej nazwie już
-istnieje, jej dane są aktualizowane (bez duplikatu), a jeśli nie istnieje —
-zostaje dodana.
+istnieje, jej dane opisowe są aktualizowane (gatunek, zasady pielęgnacji,
+strefa itd.), a jeśli nie istnieje — zostaje dodana z pełnymi danymi z
+Trello (łącznie z datami).
+
+**Ważne:** dla już istniejącej rośliny import **nigdy nie nadpisuje**
+`last_watered`/`next_watering`/`last_fertilized`/`next_fertilizing`/
+`last_repotted` — od momentu dodania rośliny do HA to HA jest źródłem
+prawdy dla tych dat (aktualizowanych przez `mark_watered`, przyciski w
+powiadomieniach itd.), nie Trello. Dzięki temu re-import (np. cykliczna
+synchronizacja) nigdy nie cofnie już zapisanego podlania/nawożenia.
 
 ### Usuwanie roślin, których już nie ma (zdechły / usunięte z Trello)
 

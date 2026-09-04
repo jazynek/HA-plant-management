@@ -107,6 +107,16 @@ ADD_NOTE_SCHEMA = vol.Schema(
 )
 IMPORT_SEED_SCHEMA = vol.Schema({vol.Required("plants"): vol.All(cv.ensure_list, [dict])})
 
+# Once a plant exists in HA, HA is the source of truth for these — a re-import (e.g. syncing
+# from Trello again) must never overwrite live care-tracking dates with stale seed data.
+CARE_TRACKING_FIELDS = {
+    "last_watered",
+    "next_watering",
+    "last_fertilized",
+    "next_fertilizing",
+    "last_repotted",
+}
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     domain_data = hass.data.setdefault(DOMAIN, {})
@@ -354,7 +364,10 @@ def _async_register_services(hass: HomeAssistant, store: PlantStore) -> None:
             name = plant_fields.get("name")
             existing_id = store.find_by_name(name) if name else None
             if existing_id:
-                store.update_plant(existing_id, **plant_fields)
+                update_fields = {
+                    k: v for k, v in plant_fields.items() if k not in CARE_TRACKING_FIELDS
+                }
+                store.update_plant(existing_id, **update_fields)
                 async_dispatcher_send(hass, SIGNAL_PLANT_UPDATED, existing_id)
             else:
                 plant_id = store.add_plant(**plant_fields)
