@@ -15,7 +15,6 @@ from homeassistant.helpers.event import async_track_time_change
 
 from .const import (
     ACTION_SNOOZE_BOTH,
-    ACTION_SNOOZE_FERTILIZE,
     ACTION_SNOOZE_WATER,
     ACTION_WATER,
     ACTION_WATER_FERTILIZE,
@@ -194,6 +193,11 @@ async def _async_run_notification_check(hass: HomeAssistant, entry: ConfigEntry,
         return
 
     for plant_id, plant, water_due, fert_due in due:
+        if not water_due:
+            # Fertilizing alone is never sent as a standalone notification — it waits
+            # until watering is also due, then rides along in one combined message.
+            continue
+
         actions: list[dict[str, str]] = []
         note_lines = []
         if water_due and plant.get("watering_notes"):
@@ -222,17 +226,6 @@ async def _async_run_notification_check(hass: HomeAssistant, entry: ConfigEntry,
                 actions.append(
                     {"action": f"PM_{ACTION_SNOOZE_WATER}_{d}::{plant_id}", "title": f"⏭ +{d}d"}
                 )
-        else:
-            title = f"🌱 {plant['name']}: czas nawieźć"
-            actions.append({"action": f"PM_FERTILIZE::{plant_id}", "title": "🌱 Nawiezione"})
-            actions.append(
-                {"action": f"PM_{ACTION_WATER_FERTILIZE}::{plant_id}", "title": "💧🌱 Podlano+Nawóz"}
-            )
-            for d in (1, 3, 5):
-                actions.append(
-                    {"action": f"PM_{ACTION_SNOOZE_FERTILIZE}_{d}::{plant_id}", "title": f"⏭ +{d}d"}
-                )
-
         message = f"{title}\n{message_body}" if message_body else title
         notification_data: dict[str, Any] = {"actions": actions, "tag": f"plant_management_{plant_id}"}
         if plant.get("photo"):

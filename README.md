@@ -29,6 +29,14 @@ telefon** (przez aplikację HA Companion) na roślinę, z przyciskami akcji:
 - 💧🌱 **Podlano + Nawóz** (zaznacza jednocześnie podlanie i nawożenie)
 - ⏭ **+1 dzień / +3 dni / +5 dni** (przesuwa najbliższy termin)
 
+**Nawożenie nigdy nie przychodzi jako osobne powiadomienie.** Jeśli termin
+nawożenia minął, ale podlewania jeszcze nie — integracja czeka i nie
+wysyła nic, dopóki nie nadejdzie też termin podlewania; wtedy dostajesz
+jedno powiadomienie "podlej i nawieź" z przyciskiem `Podlano + Nawóz`.
+Encje (`sensor.*_status`, `sensor.*_kolejne_nawozenie`) nadal poprawnie
+pokazują zaległe nawożenie — ogranicza to tylko powiadomienia push, nie
+dane w HA.
+
 Treść powiadomienia zawiera też notatkę pielęgnacyjną dla danego terminu
 (np. "rzadkie, sukulentowe — dokładnie osuszać podłoże; miernik: ok. 2"),
 jeśli była zapisana przy roślinie (pole `watering_notes`/`fertilizing_notes`).
