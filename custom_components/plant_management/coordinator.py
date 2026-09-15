@@ -218,6 +218,22 @@ class PlantStore:
         plant["photo"] = filename
         self._log(plant, "photo_updated", filename)
 
+    def set_watering_interval(self, plant_id: str, days: int) -> None:
+        plant = self.plants.get(plant_id)
+        if not plant:
+            raise ValueError(f"Unknown plant_id: {plant_id}")
+        plant["watering_interval_days"] = days
+        self._recompute_water_due(plant)
+        self._log(plant, "updated", f"watering_interval_days={days}")
+
+    def set_fertilizing_interval(self, plant_id: str, days: int) -> None:
+        plant = self.plants.get(plant_id)
+        if not plant:
+            raise ValueError(f"Unknown plant_id: {plant_id}")
+        plant["fertilizing_interval_days"] = days
+        self._recompute_fertilize_due(plant)
+        self._log(plant, "updated", f"fertilizing_interval_days={days}")
+
     def status(self, plant_id: str) -> str:
         plant = self.plants.get(plant_id)
         if not plant:

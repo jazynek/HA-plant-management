@@ -5,7 +5,7 @@ DOMAIN = "plant_management"
 STORAGE_VERSION = 1
 STORAGE_KEY = f"{DOMAIN}_plants"
 
-PLATFORMS = ["sensor", "button"]
+PLATFORMS = ["sensor", "button", "number"]
 
 CONF_NOTIFY_SERVICE = "notify_service"
 CONF_CHECK_TIME = "check_time"

@@ -107,13 +107,16 @@ ADD_NOTE_SCHEMA = vol.Schema(
 IMPORT_SEED_SCHEMA = vol.Schema({vol.Required("plants"): vol.All(cv.ensure_list, [dict])})
 
 # Once a plant exists in HA, HA is the source of truth for these — a re-import (e.g. syncing
-# from Trello again) must never overwrite live care-tracking dates with stale seed data.
+# from Trello again) must never overwrite live care-tracking dates or intervals a user has
+# since adjusted in HA (e.g. via the number entities) with stale seed data.
 CARE_TRACKING_FIELDS = {
     "last_watered",
     "next_watering",
     "last_fertilized",
     "next_fertilizing",
     "last_repotted",
+    "watering_interval_days",
+    "fertilizing_interval_days",
 }
 
 

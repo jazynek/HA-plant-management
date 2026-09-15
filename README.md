@@ -20,6 +20,11 @@ Dla każdej rośliny integracja tworzy jedno urządzenie ("device") z encjami:
   — encje typu `date`, wygodne do automatyzacji i widoków kalendarza.
 - `button.<roślina>_podlano` i `button.<roślina>_podlano_nawoz` — do
   ręcznego oznaczania z poziomu dashboardu.
+- `number.<roślina>_czestotliwosc_podlewania` i
+  `number.<roślina>_czestotliwosc_nawozenia` — częstotliwość w dniach,
+  edytowalna bezpośrednio na stronie urządzenia w HA (bez usług/Developer
+  Tools). Zmiana od razu przelicza najbliższy termin względem ostatniego
+  podlania/nawożenia.
 
 Codziennie o skonfigurowanej godzinie integracja sprawdza, które rośliny
 wymagają podlania/nawożenia i wysyła **jedno powiadomienie push na
@@ -95,10 +100,12 @@ Trello (łącznie z datami).
 
 **Ważne:** dla już istniejącej rośliny import **nigdy nie nadpisuje**
 `last_watered`/`next_watering`/`last_fertilized`/`next_fertilizing`/
-`last_repotted` — od momentu dodania rośliny do HA to HA jest źródłem
-prawdy dla tych dat (aktualizowanych przez `mark_watered`, przyciski w
-powiadomieniach itd.), nie Trello. Dzięki temu re-import (np. cykliczna
-synchronizacja) nigdy nie cofnie już zapisanego podlania/nawożenia.
+`last_repotted`/`watering_interval_days`/`fertilizing_interval_days` — od
+momentu dodania rośliny do HA to HA jest źródłem prawdy dla tych dat i
+częstotliwości (aktualizowanych przez `mark_watered`, przyciski w
+powiadomieniach, encje `number.*` itd.), nie Trello. Dzięki temu re-import
+(np. cykliczna synchronizacja) nigdy nie cofnie zapisanego podlania,
+nawożenia ani ręcznie zmienionej częstotliwości.
 
 ### Usuwanie roślin, których już nie ma (zdechły / usunięte z Trello)
 
