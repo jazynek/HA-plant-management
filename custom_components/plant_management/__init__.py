@@ -144,7 +144,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     unsub_time = _async_schedule_daily_check(hass, entry, store)
     unsub_event = hass.bus.async_listen(EVENT_NOTIFICATION_ACTION, _make_action_handler(hass, store))
     unsub_options = entry.add_update_listener(_async_reload_schedule)
+    unsub_refresh = _async_schedule_status_refresh(hass, store)
 
+    hass.data[DOMAIN][entry.entry_id]["unsub_refresh"] = unsub_refresh
     hass.data[DOMAIN][entry.entry_id]["unsub_time"] = unsub_time
     hass.data[DOMAIN][entry.entry_id]["unsub_event"] = unsub_event
     hass.data[DOMAIN][entry.entry_id]["unsub_options"] = unsub_options
@@ -163,7 +165,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if ok:
         data = hass.data[DOMAIN].pop(entry.entry_id)
-        for key in ("unsub_time", "unsub_event", "unsub_options"):
+        for key in ("unsub_time", "unsub_event", "unsub_options", "unsub_refresh"):
             if data.get(key):
                 data[key]()
     return ok
@@ -177,11 +179,29 @@ def _async_schedule_daily_check(hass: HomeAssistant, entry: ConfigEntry, store: 
         parsed = datetime.strptime(DEFAULT_CHECK_TIME, "%H:%M:%S").time()
 
     async def _check(_now: Any) -> None:
+        # Status sensors are push-only, so recompute them before notifying to keep
+        # the dashboard consistent with the notification that is about to be sent.
+        _async_refresh_statuses(hass, store)
         await _async_run_notification_check(hass, entry, store)
 
     return async_track_time_change(
         hass, _check, hour=parsed.hour, minute=parsed.minute, second=parsed.second
     )
+
+
+def _async_refresh_statuses(hass: HomeAssistant, store: PlantStore) -> None:
+    """Re-publish every plant so entities recompute date-dependent state."""
+    for plant_id in list(store.plants):
+        async_dispatcher_send(hass, SIGNAL_PLANT_UPDATED, plant_id)
+
+
+def _async_schedule_status_refresh(hass: HomeAssistant, store: PlantStore):
+    """Refresh statuses shortly after midnight, when next_* dates roll over to due."""
+
+    async def _refresh(_now: Any) -> None:
+        _async_refresh_statuses(hass, store)
+
+    return async_track_time_change(hass, _refresh, hour=0, minute=0, second=5)
 
 
 async def _async_run_notification_check(hass: HomeAssistant, entry: ConfigEntry, store: PlantStore) -> None:
